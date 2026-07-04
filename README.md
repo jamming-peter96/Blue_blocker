@@ -2,7 +2,7 @@
   <img src="Blue_Blocker.png" alt="Blue Blocker Logo" width="250">
 </p>
 
-  blue_blocker
+#>  blue_blocker
 # ESP32 & Dual nRF24L01 2.4GHz Signal Tester / Jammer
 
 This project explores the vulnerability of the 2.4GHz spectrum (commonly used by Bluetooth and Wi-Fi) against continuous carrier waves. The system utilizes an ESP32-WROOM-32E and two nRF24L01+ modules to transmit raw signals across multiple frequencies in rapid succession.
