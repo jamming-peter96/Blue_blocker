@@ -1,0 +1,13 @@
+# Temporäre Arduino-Dateien
+.vscdb/
+.vscode/
+build/
+bin/
+*.elf
+*.hex
+*.bin
+
+# PlatformIO-Müll
+.pio/
+.pioenvs/
+.piolibdeps/
