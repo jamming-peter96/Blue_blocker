@@ -34,9 +34,7 @@ Dein Kommentar wird dann automatisch auf der README angezeigt mit einer KI-Antwo
 
 ### Template für deinen Kommentar:
 
-### [features]
 - **@jamming-peter96** (05.07.2026): "Wie verbinde ich NRF24 mit ESP32?" `tags: @git_ai, @hardware, @nrf24`
-
 
 ## 💬 Bisherige Kommentare
 
