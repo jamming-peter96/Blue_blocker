@@ -33,8 +33,8 @@ Willkommen! Hier kannst du Feedback zu Blue Blocker geben. Deine Kommentare ersc
 ### Template für deinen Kommentar:
 
 ```
-### [WÄHLE_EIN_TAG_VON_OBEN]
-- **@dein_username** (DATUM): "Dein Kommentar..."
+### [security]
+- **@peter** (05.07.2026): "super perfekt danke sicher."
 ```
 
 **Beispiel:**
