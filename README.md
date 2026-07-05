@@ -7,9 +7,7 @@
 This project explores the vulnerability of the 2.4GHz spectrum (commonly used by Bluetooth and Wi-Fi) against continuous carrier waves. The system utilizes an ESP32-WROOM-32E and two nRF24L01+ modules to transmit raw signals across multiple frequencies in rapid succession.
 
 > ⚠️ **Legal Disclaimer:** This project is strictly for educational, research, and testing purposes inside a controlled environment (e.g., a Faraday cage). Operating RF jamming equipment is illegal in many jurisdictions without proper authorization. The creator assumes no liability for any misuse, interference, or damage caused by this project.
-
----
-` dewidede
+> 
 
 ---
 
