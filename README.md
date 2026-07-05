@@ -9,6 +9,9 @@ This project explores the vulnerability of the 2.4GHz spectrum (commonly used by
 > ⚠️ **Legal Disclaimer:** This project is strictly for educational, research, and testing purposes inside a controlled environment (e.g., a Faraday cage). Operating RF jamming equipment is illegal in many jurisdictions without proper authorization. The creator assumes no liability for any misuse, interference, or damage caused by this project.
 
 ---
+` dewidede
+
+---
 
 ## 📋 Requirements & Parts List
 
