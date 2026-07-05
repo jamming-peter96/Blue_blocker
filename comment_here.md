@@ -4,6 +4,24 @@ Willkommen! Hier kannst du Feedback zu Blue Blocker geben. Deine Kommentare ersc
 
 ---
 
+
+### Verfügbare Tags:
+- `@git_ai` - KI soll antworten
+- `@python` - Python-spezifisch
+- `@c++` - C++-spezifisch
+- `@hardware` - Hardware-bezogen
+- `@esp32` - ESP32-bezogen
+- `@nrf24` - NRF24-Modul
+- `@bluetooth` - Bluetooth
+- `@bug` - Fehler
+- `@feature` - Feature-Anfrage
+- `@documentation` - Dokumentation
+- `@performance` - Performance
+- `@feedback` - Allgemeines Feedback
+
+### Template für deinen Kommentar:
+
+
 ## 💬 Bisherige Kommentare
 
 ### [features]
