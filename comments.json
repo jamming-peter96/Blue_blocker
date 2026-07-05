@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "id": 1,
+      "author": "example_user",
+      "content": "Großartiges Projekt! Sehr hilfreich.",
+      "tag": "features",
+      "date": "2026-07-05",
+      "timestamp": "2026-07-05T10:30:00Z"
+    }
+  ],
+  "tags": [
+    "performance",
+    "design",
+    "features",
+    "documentation",
+    "security",
+    "speed",
+    "bug",
+    "improvement"
+  ]
+}
