@@ -59,6 +59,48 @@ The two modules run simultaneously using the ESP32's independent dual SPI buses 
 
 ---
 
+## 🔌 Hardware Pinout (v2 Only)
+
+Ensure your hardware is wired exactly according to this scheme so the Bruce-style UI and the nRF modules function properly without any button freezes.
+
+### 📱 SH1106 OLED Display (I2C)
+
+| Display Pin | ESP32 GPIO |
+| :--- | :--- |
+| **SDA** | GPIO 21 |
+| **SCL / SCK** | GPIO 22 |
+| **VCC** | 3.3V / 5V |
+| **GND** | GND |
+
+### 🕹️ Navigation Buttons
+*Note: All tactile switches connect directly to GND. Internal pull-ups are enabled in the source code.*
+
+| Button | ESP32 GPIO |
+| :--- | :--- |
+| **UP** | GPIO 26 |
+| **DOWN** | GPIO 32 |
+| **SELECT** | GPIO 33 |
+| **LEFT** | GPIO 25 |
+| **RIGHT** | GPIO 27 |
+
+### 📡 nRF24L01+ Transceiver Array
+*All three modules share the same global hardware SPI lines and are separated via independent CE/CSN channels.*
+
+**Shared SPI Bus:**
+* **MOSI:** GPIO 23
+* **MISO:** GPIO 19
+* **SCK:** GPIO 18
+
+**Module-Specific Routing:**
+
+| Transceiver | CE Pin | CSN Pin | Default Coverage Preset |
+| :--- | :--- | :--- | :--- |
+| **Module 1** | GPIO 16 | GPIO 4 | Zone 1 (Channels 2 - 42) |
+| **Module 2** | GPIO 15 | GPIO 2 | Zone 2 (Channels 43 - 83) |
+| **Module 3** | GPIO 5 | GPIO 17 | Zone 3 (Channels 84 - 124) |
+
+---
+
 ## 🔋 Handheld Expansion (Battery Power Options)
 
 If you want to make your Blue_Blocker portable for testing in different rooms, you can easily upgrade it to a battery-powered handheld device. You will need a **3.7V 1500mAh LiPo battery** and a **TP4056 charging module** with protection circuit.
