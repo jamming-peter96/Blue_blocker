@@ -34,7 +34,7 @@ Willkommen! Hier kannst du Feedback zu Blue Blocker geben. Deine Kommentare ersc
 
 ```
 ### [security]
-- **@peter** (05.07.2026): "super perfekt danke sicher."
+- **@peter** (05.07.2026): "super perfekt danke oder sicher."
 ```
 
 **Beispiel:**
