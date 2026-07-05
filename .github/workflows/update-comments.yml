@@ -1,0 +1,44 @@
+name: 📝 Update Comments on README
+
+on:
+  push:
+    paths:
+      - 'comment_here.md'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update-comments:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 🔄 Run Comment Update Script
+        run: python update_comments.py
+
+      - name: 📤 Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md comments.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-update: Comments from comment_here.md" && git push)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ✅ Success Notification
+        if: success()
+        run: echo "✨ Comments successfully updated!"
+
+      - name: ❌ Error Notification
+        if: failure()
+        run: echo "⚠️ Error updating comments. Check logs above."
