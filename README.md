@@ -135,8 +135,6 @@ If you want to make your Blue_Blocker portable for testing in different rooms, y
 
 ### 🏷️ FEATURES
 - **@example_user** (05.07.2026): "Großartiges Projekt! Sehr hilfreich."
-- **@max_dev** (05.07.2026): "Würde gerne Dark Mode sehen!"
 
 ### 🏷️ SECURITY
 - **@peter** (05.07.2026): "super perfekt danke oder sicher."
-
