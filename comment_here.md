@@ -5,6 +5,19 @@ Willkommen! Hier kannst du Feedback zu Blue Blocker geben. Deine Kommentare ersc
 ---
 
 
+---
+
+## 📌 Anleitung:
+
+1. **Username eingeben** - Nutze deinen GitHub-Benutzernamen
+2. **Tag auswählen** - Wähle das passendste Tag von oben
+3. **@git_ai Tag hinzufügen** - Damit bekommt dein Kommentar eine KI-Antwort!
+4. **Kommentar schreiben** - Schreib dein Feedback/deine Frage
+5. **Datum hinzufügen** - Format: TT.MM.YYYY
+6. **Commit & Push** - Speichern und hochladen
+
+Dein Kommentar wird dann automatisch auf der README angezeigt mit einer KI-Antwort! 🤖✨
+
 ### Verfügbare Tags:
 - `@git_ai` - KI soll antworten
 - `@python` - Python-spezifisch
