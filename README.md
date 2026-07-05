@@ -38,12 +38,7 @@ The setup was evaluated against modern consumer hardware, specifically an iPhone
 
 The two modules run simultaneously using the ESP32's independent dual SPI buses (VSPI and HSPI):
 
-| nRF24L01 Module 1 (VSPI) | ESP32 Pin | | nRF24L01 Module 2 (HSPI) | ESP32 Pin |
-| :--- | :--- | :--- | :--- | :--- |
-| **VCC** | 3.3V (with Cap) | | **VCC** | 3.3V (with Cap) |
-| **GND** | GND | | **GND** | GND |
-| **CE** | GPIO 22 | | **CE** | GPIO 16 |
-| **CSN** | GPIO 21 | | **CSN** | GPIO 15 |
+
 | **SCK** | GPIO 18 | | **SCK** | GPIO 14 |
 | **MISO** | GPIO 19 | | **MISO** | GPIO 12 |
 | **MOSI** | GPIO 23 | | **MOSI** | GPIO 13 |
@@ -56,3 +51,18 @@ The two modules run simultaneously using the ESP32's independent dual SPI buses 
 2. Wire your hardware according to the pinout table above.
 3. Upload the source code found in the `src/` directory to your ESP32.
 4. Open the Serial Monitor at **115200 Baud** to verify startup routines.
+
+---
+
+## Handheld 
+
+If you want to take it easy with you in other testing rooms you can use my list of extensions for a battery powered
+Blue_Blocker with a 1500mAh 3.7v LiPo and the charging module TP4056 for charging the battery is all what you need for the perfect handheld
+Blue_Blocker. 
+
+| TP4056 | | Battery LiPo 3.7v | ESP32 Pin |
+| :--- | :--- | :--- | :--- | :--- |
+| **B+** | 3.7V red cabel of the battery | | **VCC** | 3.3V (with Cap) |
+| **B-** | Black cabel of the battery | | **GND** | GND |
+| **CE** | GPIO 22 | | **CE** | GPIO 16 |
+| **CSN** | GPIO 21 | | **CSN** | GPIO 15 |
