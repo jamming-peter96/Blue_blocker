@@ -1,125 +1,207 @@
 #!/usr/bin/env python3
 """
-Blue Blocker - Kommentar-Management System
-Dieses Skript liest Kommentare aus comment_here.md und aktualisiert die README
+Update README with comments and KI responses from comment_here.md
 """
 
-import json
 import re
+import json
+import os
 from datetime import datetime
-from pathlib import Path
+import requests
 
-def read_comments_from_md():
-    """Liest Kommentare aus comment_here.md"""
-    comment_file = Path("comment_here.md")
-    
-    if not comment_file.exists():
-        print("❌ comment_here.md nicht gefunden!")
-        return []
-    
-    with open(comment_file, "r", encoding="utf-8") as f:
-        content = f.read()
-    
-    # Regex zum Extrahieren von Kommentaren: ### [TAG] - **@username** (DATE): "comment"
-    pattern = r'### \[(\w+)\]\s*\n- \*\*@(\w+)\*\* \((\d{2}\.\d{2}\.\d{4})\): "(.+?)"'
-    matches = re.findall(pattern, content)
-    
-    comments = []
-    for tag, username, date, comment_text in matches:
-        comments.append({
-            "tag": tag,
-            "author": username,
-            "date": date,
-            "content": comment_text
-        })
-    
-    return comments
+# Hugging Face API endpoint
+HF_API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1"
 
-def update_readme(comments):
-    """Aktualisiert die README mit Kommentaren"""
-    readme_file = Path("README.md")
+def get_ai_response(question, tags, hf_token):
+    """
+    Get response from Hugging Face KI
+    """
+    if not hf_token:
+        print("⚠️  HUGGING_FACE_TOKEN nicht gesetzt, überspringen KI-Antwort")
+        return None
     
-    if not readme_file.exists():
-        print("❌ README.md nicht gefunden!")
-        return
+    try:
+        headers = {"Authorization": f"Bearer {hf_token}"}
+        
+        # Prompt basierend auf Tags
+        system_prompt = "Du bist ein hilfreicher KI-Assistent für das Blue Blocker ESP32 Projekt. Antworte kurz und prägnant (max 2-3 Sätze)."
+        
+        if "@python" in tags:
+            system_prompt += " Konzentriere dich auf Python-Lösungen."
+        if "@c++" in tags:
+            system_prompt += " Konzentriere dich auf C++-Lösungen."
+        if "@hardware" in tags:
+            system_prompt += " Konzentriere dich auf Hardware-Aspekte."
+        if "@nrf24" in tags:
+            system_prompt += " Du sprichst speziell über das NRF24-Modul."
+        if "@esp32" in tags:
+            system_prompt += " Du sprichst speziell über ESP32."
+        
+        prompt = f"{system_prompt}\n\nFrage: {question}"
+        
+        payload = {
+            "inputs": prompt,
+            "parameters": {
+                "max_length": 150,
+                "temperature": 0.7,
+            }
+        }
+        
+        response = requests.post(HF_API_URL, headers=headers, json=payload, timeout=30)
+        
+        if response.status_code == 200:
+            result = response.json()
+            if isinstance(result, list) and len(result) > 0:
+                text = result[0].get("generated_text", "")
+                # Extrahiere nur die Antwort (nach dem Prompt)
+                if "Frage:" in text:
+                    answer = text.split("Frage:")[1].strip()
+                else:
+                    answer = text.strip()
+                return answer[:200]  # Max 200 Zeichen
+        else:
+            print(f"⚠️  HF API Error: {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"❌ KI-Fehler: {e}")
+        return None
+
+def extract_comments_from_file():
+    """
+    Extract comments from comment_here.md
+    """
+    comments_data = {}
     
-    with open(readme_file, "r", encoding="utf-8") as f:
-        readme_content = f.read()
+    try:
+        with open("comment_here.md", "r", encoding="utf-8") as f:
+            content = f.read()
+    except FileNotFoundError:
+        print("❌ comment_here.md nicht gefunden")
+        return comments_data
     
-    # Erstelle Feedback-Sektion
-    feedback_section = generate_feedback_section(comments)
+    # Pattern: ### [TAG_NAME] oder ### [tag]
+    section_pattern = r"###\s*\[([^\]]+)\]"
+    # Pattern für Kommentare: - **@username** (DATUM): "text" `tags: ...`
+    comment_pattern = r"-\s*\*\*@([^*]+)\*\*\s*\(([^)]+)\):\s*\"([^\"]+)\"\s*`tags:\s*([^`]+)`"
     
-    # Wenn Feedback-Sektion bereits existiert, ersetze sie
-    if "## 💬 Was halten andere von Blue Blocker?" in readme_content:
-        pattern = r"## 💬 Was halten andere von Blue Blocker\?.*?(?=\n## |\Z)"
-        readme_content = re.sub(pattern, feedback_section.rstrip(), readme_content, flags=re.DOTALL)
+    sections = re.split(section_pattern, content)
+    
+    for i in range(1, len(sections), 2):
+        tag_name = sections[i]
+        section_content = sections[i+1] if i+1 < len(sections) else ""
+        
+        if tag_name not in comments_data:
+            comments_data[tag_name] = []
+        
+        # Finde alle Kommentare in diesem Abschnitt
+        matches = re.finditer(comment_pattern, section_content)
+        for match in matches:
+            username = match.group(1)
+            date = match.group(2)
+            comment_text = match.group(3)
+            tags_str = match.group(4)
+            
+            comments_data[tag_name].append({
+                "username": username,
+                "date": date,
+                "comment": comment_text,
+                "tags": [t.strip() for t in tags_str.split(",")]
+            })
+    
+    return comments_data
+
+def generate_readme(comments_data, hf_token):
+    """
+    Generate README with comments and KI responses
+    """
+    readme_content = """# 🔵 Blue Blocker - ESP32 Bluetooth Jammer Test Bench
+
+## 📋 Project Overview
+
+...[rest of your README]...
+
+---
+
+## 💬 Community Feedback & KI-Responses
+
+"""
+    
+    for tag_name, comments in comments_data.items():
+        if comments:  # Nur wenn Kommentare vorhanden sind
+            readme_content += f"\n### [{tag_name.upper()}]\n\n"
+            
+            for comment in comments:
+                readme_content += f"**@{comment['username']}** ({comment['date']}):\n"
+                readme_content += f"> {comment['comment']}\n\n"
+                
+                # Wenn @git_ai Tag vorhanden, KI-Antwort holen
+                if "@git_ai" in comment["tags"]:
+                    print(f"🤖 Getting KI response for @{comment['username']}...")
+                    ai_response = get_ai_response(comment["comment"], comment["tags"], hf_token)
+                    
+                    if ai_response:
+                        readme_content += f"🤖 **KI-Antwort:** _{ai_response}_\n\n"
+                    else:
+                        readme_content += f"🤖 **KI-Antwort:** _[KI antwortet in Kürze...]_\n\n"
+                
+                readme_content += "---\n\n"
+    
+    return readme_content
+
+def update_readme_file(new_feedback_section):
+    """
+    Update README.md with new feedback section
+    """
+    try:
+        with open("README.md", "r", encoding="utf-8") as f:
+            readme = f.read()
+    except FileNotFoundError:
+        print("❌ README.md nicht gefunden")
+        return False
+    
+    # Finde den Feedback-Bereich oder füge ihn am Ende ein
+    if "## 💬 Community Feedback" in readme:
+        # Ersetze existierenden Feedback-Bereich
+        pattern = r"## 💬 Community Feedback.*?(?=\n## |\Z)"
+        readme = re.sub(pattern, new_feedback_section.rstrip() + "\n", readme, flags=re.DOTALL)
     else:
-        # Füge vor dem letzten "---" oder am Ende ein
-        readme_content = readme_content.rstrip() + "\n\n" + feedback_section
+        # Füge am Ende ein
+        readme += f"\n{new_feedback_section}"
     
-    with open(readme_file, "w", encoding="utf-8") as f:
-        f.write(readme_content)
-    
-    print("✅ README.md aktualisiert!")
-
-def generate_feedback_section(comments):
-    """Generiert die Feedback-Sektion für README"""
-    section = "## 💬 Was halten andere von Blue Blocker?\n\n"
-    
-    if not comments:
-        section += "Noch keine Kommentare. Sei der erste! 🎉\n"
-        return section
-    
-    # Gruppiere Kommentare nach Tag
-    tags_dict = {}
-    for comment in comments:
-        tag = comment["tag"]
-        if tag not in tags_dict:
-            tags_dict[tag] = []
-        tags_dict[tag].append(comment)
-    
-    # Erstelle formatierte Ausgabe
-    for tag, tag_comments in sorted(tags_dict.items()):
-        section += f"### 🏷️ {tag.upper()}\n"
-        for comment in tag_comments:
-            section += f"- **@{comment['author']}** ({comment['date']}): \"{comment['content']}\"\n"
-        section += "\n"
-    
-    return section
-
-def save_to_json(comments):
-    """Speichert Kommentare als JSON"""
-    json_file = Path("comments.json")
-    
-    data = {
-        "last_updated": datetime.now().isoformat(),
-        "total_comments": len(comments),
-        "comments": comments,
-        "tags": ["performance", "design", "features", "documentation", "security", "speed", "bug", "improvement"]
-    }
-    
-    with open(json_file, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-    
-    print(f"✅ {len(comments)} Kommentare in comments.json gespeichert!")
+    try:
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write(readme)
+        print("✅ README.md aktualisiert!")
+        return True
+    except Exception as e:
+        print(f"❌ Fehler beim Schreiben von README.md: {e}")
+        return False
 
 def main():
-    """Hauptfunktion"""
-    print("🔄 Blue Blocker - Kommentar-System wird aktualisiert...")
-    print()
+    print("🚀 Starte Comment Update System...\n")
     
-    # Lese Kommentare
-    comments = read_comments_from_md()
-    print(f"📖 {len(comments)} Kommentare gelesen")
+    # Get HuggingFace Token from environment
+    hf_token = os.getenv("HUGGING_FACE_TOKEN")
     
-    # Speichere als JSON
-    save_to_json(comments)
+    # Extract comments
+    print("📖 Lese Kommentare aus comment_here.md...")
+    comments_data = extract_comments_from_file()
     
-    # Aktualisiere README
-    update_readme(comments)
+    if not comments_data:
+        print("⚠️  Keine Kommentare gefunden")
+        return
     
-    print()
-    print("✨ Fertig! Kommentare wurden aktualisiert!")
+    print(f"✅ {sum(len(c) for c in comments_data.values())} Kommentare gefunden\n")
+    
+    # Generate README section
+    print("📝 Generiere README-Sektion...")
+    feedback_section = generate_readme(comments_data, hf_token)
+    
+    # Update README
+    print("💾 Speichere README.md...")
+    update_readme_file(feedback_section)
+    
+    print("\n✨ Fertig!")
 
 if __name__ == "__main__":
     main()
