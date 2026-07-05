@@ -130,3 +130,13 @@ If you want to make your Blue_Blocker portable for testing in different rooms, y
 2. Wire your hardware according to the pinout and battery tables above.
 3. Upload the source code found in the `src/` directory to your ESP32.
 4. Open the Serial Monitor at **115200 Baud** to verify startup routines.
+
+## 💬 Was halten andere von Blue Blocker?
+
+### 🏷️ FEATURES
+- **@example_user** (05.07.2026): "Großartiges Projekt! Sehr hilfreich."
+- **@max_dev** (05.07.2026): "Würde gerne Dark Mode sehen!"
+
+### 🏷️ SECURITY
+- **@peter** (05.07.2026): "super perfekt danke oder sicher."
+
