@@ -4,9 +4,6 @@ Willkommen! Hier kannst du Feedback zu Blue Blocker geben. Deine Kommentare ersc
 
 ---
 
-
----
-
 ## 📌 Anleitung:
 
 1. **Username eingeben** - Nutze deinen GitHub-Benutzernamen
@@ -34,7 +31,7 @@ Dein Kommentar wird dann automatisch auf der README angezeigt mit einer KI-Antwo
 
 ### Template für deinen Kommentar:
 
-- **@jamming-peter96** (05.07.2026): "Wie verbinde ich NRF24 mit ESP32?" `tags: @git_ai, @hardware, @nrf24`
+- **@jamming-peter96** (05.07.2026): "Wie verbinde ich NRF24 mit dem ESP32?" `tags: @git_ai, @hardware, @nrf24`
 
 ## 💬 Bisherige Kommentare
 
