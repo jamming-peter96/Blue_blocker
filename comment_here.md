@@ -30,7 +30,7 @@ Dein Kommentar wird dann automatisch auf der README angezeigt mit einer KI-Antwo
 - `@feedback` - Allgemeines Feedback
 
 ### Template für deinen Kommentar:
-
+### [git_ai]
 - **@jamming-peter96** (05.07.2026): "Wie verbinde ich NRF24 mit dem ESP32?" `tags: @git_ai, @hardware, @nrf24`
 
 ## 💬 Bisherige Kommentare
