@@ -146,7 +146,25 @@ If you want to make your Blue_Blocker portable for testing in different rooms, y
 
 ---
 
+# 🔵 Blue Blocker - ESP32 Bluetooth Jammer Test Bench
+
+## 📋 Project Overview
+
+...[rest of your README]...
+
+---
+
 ## 💬 Community Feedback & KI-Responses
+
+
+### [GIT_AI]
+
+**@jamming-peter96** (05.07.2026):
+> Wie verbinde ich NRF24 mit dem ESP32?
+
+🤖 **KI-Antwort:** _[KI antwortet in Kürze...]_
+
+---
 
 
 ### [FEATURES]
@@ -167,4 +185,3 @@ If you want to make your Blue_Blocker portable for testing in different rooms, y
 🤖 **KI-Antwort:** _[KI antwortet in Kürze...]_
 
 ---
-
