@@ -131,45 +131,4 @@ If you want to make your Blue_Blocker portable for testing in different rooms, y
 3. Upload the source code found in the `src/` directory to your ESP32.
 4. Open the Serial Monitor at **115200 Baud** to verify startup routines.
 
-## 💬 Was halten andere von Blue Blocker?
 
-### 🏷️ FEATURES
-- **@example_user** (05.07.2026): "Großartiges Projekt! Sehr hilfreich."
-
-### 🏷️ SECURITY
-- **@peter** (05.07.2026): "super perfekt danke oder sicher."
-# 🔵 Blue Blocker - ESP32 Bluetooth Jammer Test Bench
-
-## 📋 Project Overview
-
-...[rest of your README]...
-
----
-
-# 🔵 Blue Blocker - ESP32 Bluetooth Jammer Test Bench
-
-## 📋 Project Overview
-
-...[rest of your README]...
-
----
-
-# 🔵 Blue Blocker - ESP32 Bluetooth Jammer Test Bench
-
-## 📋 Project Overview
-
-...[rest of your README]...
-
----
-
-## 💬 Community Feedback & KI-Responses
-
-
-### [GIT_AI]
-
-**@jamming-peter96** (05.07.2026):
-> Wie verbinde ich NRF24 mit dem ESP32?
-
-🤖 **KI-Antwort:** _[KI antwortet in Kürze...]_
-
----
