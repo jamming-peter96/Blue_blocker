@@ -35,12 +35,6 @@ Dein Kommentar wird dann automatisch auf der README angezeigt mit einer KI-Antwo
 
 ## 💬 Bisherige Kommentare
 
-### [features]
-- **@example_user** (05.07.2026): "Großartiges Projekt! Sehr hilfreich." `tags: @git_ai, @feedback`
-
-### [security]
-- **@peter** (05.07.2026): "super perfekt danke oder sicher." `tags: @git_ai`
-
 ---
 
 ## ✍️ Neuen Kommentar schreiben
